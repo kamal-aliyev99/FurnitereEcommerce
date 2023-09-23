@@ -45,11 +45,11 @@ public class Product {
     @Column(name = "photo_url")
     List<String> photoUrls;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id") // This is the foreign key column in the product table
     Category category;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "collection_id")
     Collection collection;
 

@@ -5,6 +5,8 @@ import com.myangels.furnitereecommerce.model.dto.response.ProductResponse;
 import com.myangels.furnitereecommerce.entity.Product;
 import com.myangels.furnitereecommerce.exception.NotFoundException;
 import com.myangels.furnitereecommerce.mapper.ProductMapper;
+import com.myangels.furnitereecommerce.repository.CategoryRepository;
+import com.myangels.furnitereecommerce.repository.CollectionRepository;
 import com.myangels.furnitereecommerce.repository.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +28,14 @@ import static com.myangels.furnitereecommerce.mapper.ProductMapper.toProductResp
 public class ProductService {
     ProductRepository productRepository;
     ProductPhotosService productPhotosService;
+    CategoryRepository categoryRepository;
+    CollectionRepository collectionRepository;
 
     @Transactional
     public void create(ProductRequest productRequest) {
-        productRepository.save(toProduct(productRequest));
+        productRepository.save(toProduct(productRequest,
+                categoryRepository,
+                collectionRepository));
     }
 
     public ProductResponse findProductById(Long id) {

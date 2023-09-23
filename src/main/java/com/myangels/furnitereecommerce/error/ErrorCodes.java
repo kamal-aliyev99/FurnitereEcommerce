@@ -7,16 +7,17 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public enum ErrorCodes implements ErrorCode{
-    BAD_REQUEST("Bad Request",400),
-    INTERNAL_SERVER_ERROR("Internal Server error",500),
-    NOT_FOUND("Not found",404);
+    BAD_REQUEST("Bad Request","400"),
+    INTERNAL_SERVER_ERROR("Internal Server error","500"),
+    NOT_FOUND("Not found","404"),
+    DUPLICATE_NAME("Duplicate","400");
 
     String message;
-    Integer  code;
+    String  code;
 
     @Override
     public String code() {
-        return this.name();
+        return this.code;
     }
 
     @Override

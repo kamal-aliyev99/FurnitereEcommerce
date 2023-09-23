@@ -20,8 +20,8 @@ public class ProductRequest {
     String color;
     Double popularity;
     Integer stock;
-    Category category;
-    Collection collection;
+    Long categoryId;
+    Long collectionId;
     List<String> photoUrls;
 
 }
