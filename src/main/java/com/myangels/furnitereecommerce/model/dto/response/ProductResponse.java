@@ -1,5 +1,7 @@
 package com.myangels.furnitereecommerce.model.dto.response;
 
+import com.myangels.furnitereecommerce.entity.Category;
+import com.myangels.furnitereecommerce.entity.Collection;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -21,10 +23,6 @@ public class ProductResponse {
 
     BigDecimal price;
 
-    String category;
-
-    String collection;
-
     Double popularity;
 
     Integer stock;
@@ -32,5 +30,9 @@ public class ProductResponse {
     String color;
 
     List<String> photoUrls;
+
+    Category category;
+
+    Collection collection;
 
 }

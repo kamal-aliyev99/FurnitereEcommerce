@@ -30,12 +30,6 @@ public class Product {
     @Column(name = "price")
     BigDecimal price;
 
-    @Column(name = "category")
-    String category;
-
-    @Column(name = "collection")
-    String collection;
-
     @Column(name = "popularity")
     Double popularity;
 
@@ -49,7 +43,15 @@ public class Product {
     @CollectionTable(name = "product_photos",
             joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "photo_url")
-    private List<String> photoUrls;
+    List<String> photoUrls;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id") // This is the foreign key column in the product table
+    Category category;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "collection_id")
+    Collection collection;
 
     @Override
     public boolean equals(Object o) {
