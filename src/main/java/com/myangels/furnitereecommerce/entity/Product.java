@@ -53,6 +53,10 @@ public class Product {
     @JoinColumn(name = "collection_id")
     Collection collection;
 
+    @ManyToOne
+    @JoinColumn(name = "wishlist_id")
+    private Wishlist wishlist;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

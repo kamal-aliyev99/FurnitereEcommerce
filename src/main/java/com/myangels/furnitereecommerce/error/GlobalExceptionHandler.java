@@ -1,6 +1,7 @@
 package com.myangels.furnitereecommerce.error;
 
 import com.myangels.furnitereecommerce.error.response.ErrorResponse;
+import com.myangels.furnitereecommerce.exception.DuplicateNameException;
 import com.myangels.furnitereecommerce.exception.NotFoundException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class GlobalExceptionHandler {
     public ErrorResponse handleException(Exception ex) {
         String traceId = UUID.randomUUID().toString();
         LocalDateTime timestamp = LocalDateTime.now();
-        log.error("Exception occured,traceId {},message {}, code {}, timestamp {}",
+        log.error("Exception occurred,traceId {},message {}, code {}, timestamp {}",
                 traceId, ex.getMessage(), ErrorCodes.INTERNAL_SERVER_ERROR, timestamp);
 
         return ErrorResponse.builder()
@@ -52,7 +53,24 @@ public class GlobalExceptionHandler {
     public ErrorResponse handleNotFoundException(NotFoundException ex) {
         String traceId = UUID.randomUUID().toString();
         LocalDateTime timestamp = LocalDateTime.now();
-        log.error("Exception occured,traceId {},message {}, code {}, timestamp {}",
+        log.error("Exception occurred,traceId {},message {}, code {}, timestamp {}",
+                traceId, "Not found", ErrorCodes.NOT_FOUND, timestamp);
+
+        return ErrorResponse.builder()
+                .traceId(traceId)
+                .message(ex.getMessage())
+                .code(ErrorCodes.NOT_FOUND.code())
+                .path(getRequestPath())
+                .timestamp(timestamp)
+                .build();
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleDuplicateNameException(DuplicateNameException ex) {
+        String traceId = UUID.randomUUID().toString();
+        LocalDateTime timestamp = LocalDateTime.now();
+        log.error("DuplicateNameException occurred,traceId {},message {}, code {}, timestamp {}",
                 traceId, "Not found", ErrorCodes.NOT_FOUND, timestamp);
 
         return ErrorResponse.builder()
@@ -75,7 +93,7 @@ public class GlobalExceptionHandler {
 
         String traceId = UUID.randomUUID().toString();
         LocalDateTime timestamp = LocalDateTime.now();
-        log.error("Exception occured,traceId {},message {}, code {}, timestamp {}",
+        log.error("Exception occurred,traceId {},message {}, code {}, timestamp {}",
                 traceId, "Invalid Arguments", ErrorCodes.BAD_REQUEST, timestamp);
 
         return ErrorResponse.builder()
