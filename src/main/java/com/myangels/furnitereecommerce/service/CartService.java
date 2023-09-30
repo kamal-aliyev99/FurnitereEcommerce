@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.myangels.furnitereecommerce.error.ErrorCodes.NOT_FOUND;
@@ -54,7 +55,19 @@ public class CartService {
                         .of(String.format("Product not found %s", request.getProductId()), NOT_FOUND));
 
         saveProduct(product, request, cart);
+    }
 
+    @Transactional
+    public void removeProductFromCart(Long userId, Long productId) {
+        Cart cart = cartRepository.findByUserId(userId);
+        if (cart == null) {
+            throw NotFoundException
+                    .of(String.format("User not found %s", userId), NOT_FOUND);
+        }
+
+        var products = cart.getProducts();
+        products.removeIf(product -> product.getId().equals(productId));
+        cartRepository.save(cart);
     }
 
     private void saveProduct(Product product, CartRequest request, Cart cart) {

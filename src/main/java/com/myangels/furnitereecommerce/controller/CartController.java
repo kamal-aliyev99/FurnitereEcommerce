@@ -28,7 +28,14 @@ public class CartController {
         cartService.addProductToCart(request);
     }
 
-    @GetMapping("/{userId}")
+    @PostMapping("/remove-product")
+    @ResponseStatus(NO_CONTENT)
+    public void removeProductFromCart(@RequestParam("userId") Long userId,
+                                      @RequestParam("productId") Long productId) {
+        cartService.removeProductFromCart(userId, productId);
+    }
+
+    @GetMapping("/userId/{userId}")
     public List<CartDto> getCart(@PathVariable("userId") Long userId) {
         return cartService.getCartByUserId(userId);
     }

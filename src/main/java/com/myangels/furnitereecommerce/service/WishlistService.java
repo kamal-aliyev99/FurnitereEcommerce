@@ -1,5 +1,6 @@
 package com.myangels.furnitereecommerce.service;
 
+import com.myangels.furnitereecommerce.entity.Product;
 import com.myangels.furnitereecommerce.entity.Wishlist;
 import com.myangels.furnitereecommerce.exception.NotFoundException;
 import com.myangels.furnitereecommerce.repository.ProductRepository;
@@ -11,6 +12,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 import static com.myangels.furnitereecommerce.error.ErrorCodes.NOT_FOUND;
 
@@ -40,7 +42,8 @@ public class WishlistService {
             wishlist.setUser(user);
         }
 
-        wishlist.addProduct(product);
+        var products = wishlist.getProducts();
+        products.add(product);
         wishlistRepository.save(wishlist);
     }
 
@@ -56,7 +59,8 @@ public class WishlistService {
         var wishlist = user.getWishlist();
 
         if (wishlist != null) {
-            wishlist.removeProduct(product);
+            var products = wishlist.getProducts();
+            products.remove(product);
             wishlistRepository.save(wishlist);
         }
 

@@ -51,18 +51,4 @@ public class Wishlist {
     }
 
 
-    public void addProduct(Product product) {
-        if (product != null) {
-            products.add(product);
-            product.getWishlists().add(this);
-        }
-    }
-
-    public void removeProduct(Product product) {
-        if (product != null) {
-            products.remove(product);
-            product.getWishlists().remove(this);
-        }
-    }
-
 }
