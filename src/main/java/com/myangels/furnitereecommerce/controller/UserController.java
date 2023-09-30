@@ -1,5 +1,6 @@
 package com.myangels.furnitereecommerce.controller;
 
+import com.myangels.furnitereecommerce.model.dto.request.UpdateUser;
 import com.myangels.furnitereecommerce.model.dto.request.UserRequest;
 import com.myangels.furnitereecommerce.service.UserService;
 import lombok.AccessLevel;
@@ -28,6 +29,13 @@ public class UserController {
     @ResponseStatus(NO_CONTENT)
     public void removeUser(@PathVariable Long id) {
         userService.removeUserById(id);
+    }
+
+    @PostMapping("update/{userId}")
+    @ResponseStatus(NO_CONTENT)
+    public void updateUser(@PathVariable("userId") Long userId,
+                           @RequestBody UpdateUser updateUser) {
+        userService.updateUser(userId, updateUser);
     }
 
 }
