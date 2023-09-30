@@ -1,10 +1,9 @@
 package com.myangels.furnitereecommerce.service;
 
 import com.myangels.furnitereecommerce.entity.Users;
-import com.myangels.furnitereecommerce.error.ErrorCodes;
 import com.myangels.furnitereecommerce.exception.NotFoundException;
 import com.myangels.furnitereecommerce.model.dto.request.UserRequest;
-import com.myangels.furnitereecommerce.repository.UserRepository;
+import com.myangels.furnitereecommerce.repository.UsersRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,19 +17,19 @@ import static com.myangels.furnitereecommerce.mapper.UserMapper.toUser;
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class UserService {
 
-    UserRepository userRepository;
+    UsersRepository usersRepository;
 
     public void addUser(UserRequest userRequest) {
-        userRepository.save(toUser(userRequest));
+        usersRepository.save(toUser(userRequest));
     }
 
     public void removeUserById(Long id) {
         var entity = fetchUserIfExist(id);
-        userRepository.delete(entity);
+        usersRepository.delete(entity);
     }
 
     private Users fetchUserIfExist(Long id) {
-        return userRepository.findById(id)
+        return usersRepository.findById(id)
                 .orElseThrow(() -> NotFoundException.of(NOT_FOUND));
     }
 

@@ -1,5 +1,6 @@
 package com.myangels.furnitereecommerce.error.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.myangels.furnitereecommerce.error.ValueError;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,6 +19,7 @@ public class ErrorResponse  implements Serializable {
     String code;
     String message;
     String path;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",shape = JsonFormat.Shape.STRING)
     LocalDateTime timestamp;
     List<ValueError> errors;
 

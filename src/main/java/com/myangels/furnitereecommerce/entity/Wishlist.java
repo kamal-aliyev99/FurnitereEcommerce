@@ -1,5 +1,8 @@
 package com.myangels.furnitereecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Data
 @Table(name = "wishlist")
@@ -23,12 +24,18 @@ public class Wishlist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @OneToMany(mappedBy = "wishlist", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "wishlist_product",
+            joinColumns = @JoinColumn(name = "wishlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    @JsonIgnoreProperties("wishlists")
+    private Set<Product> products = new HashSet<>();
 
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private Users users;
+    @JoinColumn(name = "user_id") // Assuming user_id is the foreign key column
+    private Users user;
 
     @Override
     public boolean equals(Object o) {
@@ -41,6 +48,21 @@ public class Wishlist {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+
+    public void addProduct(Product product) {
+        if (product != null) {
+            products.add(product);
+            product.getWishlists().add(this);
+        }
+    }
+
+    public void removeProduct(Product product) {
+        if (product != null) {
+            products.remove(product);
+            product.getWishlists().remove(this);
+        }
     }
 
 }

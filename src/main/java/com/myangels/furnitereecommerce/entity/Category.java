@@ -1,5 +1,6 @@
 package com.myangels.furnitereecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

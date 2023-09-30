@@ -2,9 +2,7 @@ package com.myangels.furnitereecommerce.model.dto.request;
 
 import com.myangels.furnitereecommerce.entity.Category;
 import com.myangels.furnitereecommerce.entity.Collection;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
@@ -13,6 +11,8 @@ import java.util.List;
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductRequest {
     String name;
     String description;

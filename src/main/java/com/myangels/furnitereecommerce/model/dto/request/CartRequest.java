@@ -5,11 +5,13 @@ import lombok.experimental.FieldDefaults;
 
 @Data
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class CollectionRequest {
-    String collectionName;
-    String photo;
+@FieldDefaults(level = AccessLevel.PRIVATE )
+public class CartRequest {
+    Long userId;
+    Long productId;
+    Integer pieces;
+    String color;
 
 }

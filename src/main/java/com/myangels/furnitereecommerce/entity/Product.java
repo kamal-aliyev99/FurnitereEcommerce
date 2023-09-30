@@ -1,12 +1,16 @@
 package com.myangels.furnitereecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @Entity
@@ -45,17 +49,30 @@ public class Product {
     @Column(name = "photo_url")
     List<String> photoUrls;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id") // This is the foreign key column in the product table
     Category category;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collection_id")
     Collection collection;
 
-    @ManyToOne
-    @JoinColumn(name = "wishlist_id")
-    private Wishlist wishlist;
+    @ManyToMany
+    @JoinTable(
+            name = "cart_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "cart_id")
+    )
+    private Set<Cart> carts = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "wishlist_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "wishlist_id")
+    )
+    private Set<Wishlist> wishlists = new HashSet<>();
+
 
     @Override
     public boolean equals(Object o) {
@@ -69,5 +86,4 @@ public class Product {
     public int hashCode() {
         return Objects.hash(id);
     }
-
 }
