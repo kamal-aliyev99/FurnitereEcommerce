@@ -33,6 +33,7 @@ public class UserService {
         usersRepository.save(toUser(userRequest));
     }
 
+    @Transactional
     public void removeUserById(Long id) {
         var entity = fetchUserIfExist(id);
         usersRepository.delete(entity);

@@ -25,7 +25,7 @@ public class UserController {
         userService.addUser(userRequest);
     }
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
     public void removeUser(@PathVariable Long id) {
         userService.removeUserById(id);
