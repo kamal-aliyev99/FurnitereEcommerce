@@ -44,9 +44,9 @@ public class CartService {
         if (cart == null) {
             cart = new Cart();
             cart.setUser(user);
+            cartRepository.save(cart);
             user.setCart(cart);
             usersRepository.save(user);
-            cartRepository.save(cart);
         }
 
 

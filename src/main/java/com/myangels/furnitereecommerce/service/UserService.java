@@ -68,15 +68,16 @@ public class UserService {
     private void fillIntoUserIfNonNull(Users user, UpdateUser updateUser) {
         var email = updateUser.getEmail();
         var password = updateUser.getPassword();
-        var fullName = updateUser.getPassword();
+        var fullName = updateUser.getFullName();
+
         if (email != null && !email.trim().isEmpty()) {
             user.setEmail(email);
         }
         if (password != null && !password.trim().isEmpty()) {
-            user.setEmail(password);
+            user.setPassword(password);
         }
         if (fullName != null && !fullName.trim().isEmpty()) {
-            user.setEmail(fullName);
+            user.setFullName(fullName);
         }
         usersRepository.save(user);
     }
